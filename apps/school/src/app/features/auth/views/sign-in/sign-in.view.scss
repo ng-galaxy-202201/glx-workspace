@@ -1,0 +1,14 @@
+:host {
+  height: 100vh;
+
+  form {
+    display: grid;
+    max-width: 350px;
+    margin: auto;
+    padding-top: 4rem;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}
