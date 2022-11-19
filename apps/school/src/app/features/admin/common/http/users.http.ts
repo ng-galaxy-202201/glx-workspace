@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'apps/school/src/environments/environment';
 import { map } from 'rxjs';
-import { UserDTO } from '../interfaces/user-dto.interface';
-import { UserReponse, UserWithPermissionReponse } from '../interfaces/user-response.interface';
-import { User } from '../models/user.model';
+import { UserDTO } from '../../domain/interfaces/user-dto.interface';
+import { UserReponse, UserWithPermissionReponse } from '../../domain/interfaces/user-response.interface';
+import { User, UserWithPermissions } from '../../domain/models/user.model';
 import { AdminHttpModule } from './http.module';
 
 @Injectable({
@@ -19,8 +19,21 @@ export class UsersHttp {
       .pipe(map(users => users.map(user => new User(user))))
   }
 
+  getOne(id: number) {
+    return this.http.get<UserWithPermissionReponse>(`${this.endpoint}/${id}`)
+      .pipe(map(user => new UserWithPermissions(user)))
+  }
+
   create(body: UserDTO) {
     return this.http.post<UserWithPermissionReponse>(this.endpoint, body)
+  }
+
+  update(id: number, body: UserDTO) {
+    return this.http.put<UserWithPermissionReponse>(`${this.endpoint}/${id}`, body)
+  }
+
+  delete(id: number) {
+    return this.http.delete<UserReponse>(`${this.endpoint}/${id}`)
   }
 
   search(filters: Pick<User, 'email' | 'firstName'>) {

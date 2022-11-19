@@ -1,4 +1,12 @@
-<button mat-raised-button color="primary" routerLink="./create">Nuevo Usuario</button>
+<button
+  mat-raised-button
+  color="primary"
+  routerLink="./create"
+  class="mb-2"
+  *appHasPermissions="authSession.permissions.USER_CREATE"
+>
+  Nuevo Usuario
+</button>
 
 <table mat-table [dataSource]="users" class="mat-elevation-z2">
   <ng-container matColumnDef="documentNumber">
@@ -23,6 +31,40 @@
     </td>
   </ng-container>
 
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+    <td mat-cell *matCellDef="let element">
+      <button
+        mat-icon-button
+        color="primary"
+        [routerLink]="['./', element.id, 'update']"
+        *appHasPermissions="authSession.permissions.USER_UPDATE"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="accent"
+        (click)="confirmDelete(element)"
+        *appHasPermissions="authSession.permissions.USER_DELETE"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<ng-template #ConfirmTemplate let-data>
+  <div>
+    <p class="text-lg">Desea eliminar a {{ data.fullname }}?</p>
+    <div class="grid grid-cols-2 gap-2">
+      <button mat-raised-button color="primary" (click)="deleteUser(data.id)">
+        Si
+      </button>
+      <button mat-raised-button mat-dialog-close>No</button>
+    </div>
+  </div>
+</ng-template>

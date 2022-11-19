@@ -1,0 +1,17 @@
+
+<form [formGroup]="rolForm" (ngSubmit)="submitForm()" class="mat-elevation-z2">
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="name" >
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Permisos</mat-label>
+    <mat-select multiple formControlName="permissions">
+      <mat-option *ngFor="let option of permissions$ | async" [value]="option.id">{{option.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button type="button" mat-raised-button class="mr-2" [routerLink]="backPath">Regresar</button>
+  <button mat-raised-button color="primary">Ingresar</button>
+</form>

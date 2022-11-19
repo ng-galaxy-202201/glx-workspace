@@ -11,7 +11,7 @@ export interface UserReponse {
 
 export interface UserRolPermissionReponse {
   permissions: RolPermissionReponse[];
-  isSuperuser: RolPermissionReponse[];
+  rols: RolPermissionReponse[];
 }
 
 export type UserWithPermissionReponse = UserReponse & UserRolPermissionReponse;

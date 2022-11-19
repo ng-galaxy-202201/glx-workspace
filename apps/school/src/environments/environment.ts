@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:3000/api',
+  crypto: 'xfU2rjqMi79tltT82ByC7xKAUdCUmJyu',
   auth: {
     email: 'admin@galaxy.com',
     password: 'Root1234.'

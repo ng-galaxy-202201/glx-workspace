@@ -49,6 +49,14 @@ Libreria para validar/decodificar jwt
 
 `npm i @auth0/angular-jwt`
 
+### Crypto JS
+
+Libreria para validar/decodificar jwt
+
+`npm i crypto-js`
+`npm i -D @types/crypto-js`
+
+
 ## Ejecutar el servidor 
 
 Primero instalar dependencias 

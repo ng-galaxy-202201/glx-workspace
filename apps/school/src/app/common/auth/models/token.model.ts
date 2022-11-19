@@ -18,4 +18,8 @@ export class Token {
     if (!this.isValid()) return true;
     return helper.isTokenExpired(this.token!);
   }
+
+  decode<T>() {
+    return helper.decodeToken(this.token!) as T;
+  }
 }

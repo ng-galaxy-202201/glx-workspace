@@ -1,14 +1,31 @@
 <mat-drawer-container autosize>
   <mat-drawer #drawer mode="side" [opened]="true">
     <mat-nav-list role="list">
-      <mat-list-item role="listitem" routerLink="./users">Usuarios</mat-list-item>
+      <mat-list-item
+        *ngFor="let option of menuOptions"
+        role="listitem"
+        [routerLink]="option.path"
+        >
+        {{ option.title }}
+      </mat-list-item>
     </mat-nav-list>
   </mat-drawer>
 
   <mat-drawer-content>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <span>Panel</span>
+        <button mat-button [matMenuTriggerFor]="menu">
+          {{ user.fullname }}
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="closeSession()">Cerrar Sesión</button>
+        </mat-menu>
+      </mat-toolbar-row>
+    </mat-toolbar>
 
-    <router-outlet></router-outlet>
-
+    <div class="p-2">
+      <router-outlet></router-outlet>
+    </div>
   </mat-drawer-content>
-
 </mat-drawer-container>

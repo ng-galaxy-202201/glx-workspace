@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthAccessTokenPayload } from '../interfaces/auth-access-token-payload.interface';
 import { AuthToken } from '../interfaces/auth-token.interface';
+import { AuthUser } from '../models/auth-user.model';
 import { Token } from '../models/token.model';
+import { PERMISSIONS } from '../constants/permissions';
+import { LocalStorage } from '@school/common/services/local-storage.service';
 
 const ACCESS_KEY = 'access';
 const REFRESH_KEY = 'refresh';
@@ -12,19 +16,22 @@ const REFRESH_KEY = 'refresh';
 export class AuthSession {
   access: Token;
   refresh: Token;
+  permissions = PERMISSIONS;
 
-  constructor() {
-    this.access = new Token(localStorage.getItem(ACCESS_KEY))
-    this.refresh = new Token(localStorage.getItem(REFRESH_KEY))
+  constructor(
+    private localStorage: LocalStorage
+  ) {
+    this.access = new Token(this.localStorage.getItem(ACCESS_KEY))
+    this.refresh = new Token(this.localStorage.getItem(REFRESH_KEY))
   }
 
   private setToken(key: string, token: string) {
-    localStorage.setItem(key, token);
+    this.localStorage.setItem(key, token);
     return new Token(token);
   }
 
   private removeToken(key: string) {
-    localStorage.removeItem(key);
+    this.localStorage.removeItem(key);
     return new Token(null);
   }
 
@@ -34,6 +41,11 @@ export class AuthSession {
       this.destroy();
     }
     return isValid;
+  }
+
+  getUser() {
+    const payload = this.access.decode<AuthAccessTokenPayload>();
+    return new AuthUser(payload);
   }
 
   update(access: string) {
