@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PERMISSIONS } from '@school/common/auth/constants/permissions';
 import { HasPermissionsGuard } from '@school/common/auth/guards/has-permissions.guard';
 import { AdminComponent } from './admin.component';
+import { AttendanceListView } from './views/attendance/attendance-list/attendance-list.view';
 import { RolCreateView } from './views/rol-create/rol-create.view';
 import { RolUpdateView } from './views/rol-update/rol-update.view';
 import { RolsView } from './views/rols/rols.view';
@@ -62,6 +63,10 @@ const routes: Routes = [
         data: {
           permissions: PERMISSIONS.ROL_UPDATE
         }
+      },
+      {
+        path: 'attendance',
+        loadChildren: () => import('./views/attendance/attendance.module').then(m => m.AttendanceModule)
       },
     ],
   },

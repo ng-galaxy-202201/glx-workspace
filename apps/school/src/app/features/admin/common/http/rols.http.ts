@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'apps/school/src/environments/environment';
 import { map } from 'rxjs';
-import { RolDTO } from '../../domain/interfaces/rol-dto.interface';
+import { RolDTO } from '../../domain/dto/rol.dto';
 import { RolPermissionReponse, RolWithPermissionReponse } from '../../domain/interfaces/rol-permission-response.interface';
 import { RolPermission, RolWithPermission } from '../../domain/models/rol-permission.model';
 import { AdminHttpModule } from './http.module';
@@ -11,7 +11,7 @@ import { AdminHttpModule } from './http.module';
   providedIn: AdminHttpModule
 })
 export class RolsHttp {
-  private endpoint = `${environment.baseUrl}/rols`;
+  private endpoint = 'rols';
 
   constructor(private http: HttpClient) { }
 

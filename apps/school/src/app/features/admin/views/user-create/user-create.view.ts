@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersHttp } from '../../common/http/users.http';
-import { UserDTO } from '../../domain/interfaces/user-dto.interface';
+import { UserDTO } from '../../domain/dto/user.dto';
 
 @Component({
   templateUrl: './user-create.view.html',

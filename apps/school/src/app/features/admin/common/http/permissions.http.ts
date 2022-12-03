@@ -14,7 +14,7 @@ export class PermissionsHttp {
   constructor(private http: HttpClient) { }
 
   getAll() {
-    return this.http.get<RolPermissionReponse[]>(`${environment.baseUrl}/permissions`)
+    return this.http.get<RolPermissionReponse[]>('permissions')
       .pipe(map(users => users.map(user => new RolPermission(user))))
   }
 }

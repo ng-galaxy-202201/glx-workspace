@@ -1,0 +1,36 @@
+
+<form [formGroup]="form" (ngSubmit)="submitForm()" class="mat-elevation-z2">
+  <mat-form-field appearance="outline">
+    <mat-label>Fecha</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="date" >
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Asignatura</mat-label>
+    <mat-select formControlName="classroomSubjectId">
+      <mat-option *ngFor="let option of classroomSubjectTeacherList$ | async" [value]="option.classroomSubject.id">{{option.classroomSubject}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div *ngIf="classroomSubjectIdControl.touched && datailsArray.hasError('atLeast')">
+    Debe seleccionar una asignatura, ademas debe tener alumnos
+  </div>
+
+  <ng-container formArrayName="details">
+    <div *ngFor="let item of classroomSubjectStudentList; let i = index" >
+      <div class="item" [formGroupName]="i">
+        <div>{{ item.student }}</div>
+        <mat-radio-group formControlName="status">
+          <mat-radio-button value="P">Presente</mat-radio-button>
+          <mat-radio-button value="A">Ausente</mat-radio-button>
+          <mat-radio-button value="L">Tarde</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </ng-container>
+
+  <button type="button" mat-raised-button class="mr-2" [routerLink]="backPath">Regresar</button>
+  <button mat-raised-button color="primary" [disabled]="form.invalid">Ingresar</button>
+</form>

@@ -13,6 +13,7 @@ interface MenuOption {
 const MENU_OPTIONS: MenuOption[] = [
   { title: 'Usuarios', path: './users', permissions: PERMISSIONS.USER_READ },
   { title: 'Roles', path: './rols', permissions: PERMISSIONS.ROL_READ },
+  { title: 'Asistencia', path: './attendance', permissions: PERMISSIONS.ATTENDANCE_READ },
 ];
 @Component({
   selector: 'app-admin',

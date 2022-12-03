@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { RolDTO } from '../../../domain/interfaces/rol-dto.interface';
+import { RolDTO } from '../../../domain/dto/rol.dto';
 import { RolPermission, RolWithPermission } from '../../../domain/models/rol-permission.model';
 import { PermissionsHttp } from '../../http/permissions.http';
 

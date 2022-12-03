@@ -13,7 +13,6 @@ import { AuthCommonModule } from '@school/common/auth/auth.module';
 import { RolsView } from './views/rols/rols.view';
 import { RolCreateView } from './views/rol-create/rol-create.view';
 import { RolUpdateView } from './views/rol-update/rol-update.view';
-
 @NgModule({
   declarations: [
     AdminComponent,
@@ -22,7 +21,7 @@ import { RolUpdateView } from './views/rol-update/rol-update.view';
     UserUpdateView,
     RolsView,
     RolCreateView,
-    RolUpdateView
+    RolUpdateView,
   ],
   imports: [
     CommonModule,

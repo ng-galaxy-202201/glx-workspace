@@ -1,0 +1,6 @@
+<app-attendance-form
+  backPath="../../"
+  [teacherId]="authSession.getUser().id"
+  [attendance]="attendance"
+  (save)="save($event)">
+</app-attendance-form>

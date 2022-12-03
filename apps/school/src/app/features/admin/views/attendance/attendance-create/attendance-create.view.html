@@ -1,0 +1,4 @@
+<app-attendance-form
+  [teacherId]="authSession.getUser().id"
+  (save)="save($event)">
+</app-attendance-form>

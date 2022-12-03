@@ -1,0 +1,60 @@
+<button
+  mat-raised-button
+  color="primary"
+  routerLink="./create"
+  class="mb-2"
+  *appHasPermissions="authSession.permissions.ATTENDANCE_CREATE"
+>
+  Nuevo
+</button>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef>Fecha</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.date | date }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="classroom">
+    <th mat-header-cell *matHeaderCellDef>Salón</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.classroomSubject.classroom }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="subject">
+    <th mat-header-cell *matHeaderCellDef>Curso</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.classroomSubject.subject }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+    <td mat-cell *matCellDef="let element">
+      <button
+        mat-icon-button
+        color="primary"
+        [routerLink]="['./', element.id, 'update']"
+        *appHasPermissions="authSession.permissions.ATTENDANCE_UPDATE"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="accent"
+        (click)="confirmDelete(element)"
+        *appHasPermissions="authSession.permissions.ATTENDANCE_DELETE"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+

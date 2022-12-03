@@ -11,7 +11,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
 @NgModule({
   exports: [
     MatSidenavModule,
@@ -25,7 +27,10 @@ import { MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     MatDialogModule,
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule
   ]
 })
 export class AdminMaterialModule { }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'apps/school/src/environments/environment';
 import { map } from 'rxjs';
-import { UserDTO } from '../../domain/interfaces/user-dto.interface';
+import { UserDTO } from '../../domain/dto/user.dto';
 import { UserReponse, UserWithPermissionReponse } from '../../domain/interfaces/user-response.interface';
 import { User, UserWithPermissions } from '../../domain/models/user.model';
 import { AdminHttpModule } from './http.module';
@@ -11,7 +11,7 @@ import { AdminHttpModule } from './http.module';
   providedIn: AdminHttpModule
 })
 export class UsersHttp {
-  private endpoint = `${environment.baseUrl}/users`;
+  private endpoint = 'users';
   constructor(private http: HttpClient) { }
 
   getAll() {
