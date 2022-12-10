@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NotFoundView } from '../../../core/views/not-found/not-found.view';
 import { IsAuthenticatedGuard } from './is-authenticated.guard';
@@ -15,6 +15,7 @@ describe('IsAuthenticatedGuard', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([
+          { path: 'auth', component: NotFoundView },
           { path: 'admin', component: NotFoundView, canActivate: [IsAuthenticatedGuard] }
         ])
       ],
@@ -28,11 +29,17 @@ describe('IsAuthenticatedGuard', () => {
     router.initialNavigation();
   });
 
-  it('should enter to admin', () => {
+  it('should enter to admin', fakeAsync(() => {
     spyOn(authSession, 'isAuthenticated').and.returnValue(true);
     router.navigateByUrl('/admin').then(() => {
       expect(location.path()).toBe('/admin')
     })
-  })
+  }))
 
+  it('should redirect to login', fakeAsync(() => {
+    spyOn(authSession, 'isAuthenticated').and.returnValue(false);
+    router.navigateByUrl('/admin').then(() => {
+      expect(location.path()).toBe('/auth')
+    })
+  }))
 });
