@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -14,7 +14,7 @@ import { AuthHttp } from '../../http/auth.http';
   templateUrl: './sign-in.view.html',
   styleUrls: ['./sign-in.view.scss'],
 })
-export class SignInView implements OnInit {
+export class SignInView {
   signInForm: FormGroup<{
     email: FormControl<string>;
     password: FormControl<string>;
@@ -31,8 +31,6 @@ export class SignInView implements OnInit {
       password: [environment.auth.password, Validators.required],
     });
   }
-
-  ngOnInit(): void {}
 
   signIn() {
     this.authHttp.signIn(this.signInForm.getRawValue())

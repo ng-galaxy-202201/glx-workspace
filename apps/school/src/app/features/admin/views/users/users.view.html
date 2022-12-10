@@ -8,55 +8,56 @@
   Nuevo Usuario
 </button>
 
-<table mat-table [dataSource]="users" class="mat-elevation-z2">
-  <ng-container matColumnDef="documentNumber">
-    <th mat-header-cell *matHeaderCellDef>DNI</th>
-    <td mat-cell *matCellDef="let element">{{element.dni}}</td>
-  </ng-container>
+<ng-container *ngIf="(users$ | async) as users">
+  <table mat-table [dataSource]="users" class="mat-elevation-z2">
+    <ng-container matColumnDef="documentNumber">
+      <th mat-header-cell *matHeaderCellDef>DNI</th>
+      <td mat-cell *matCellDef="let element">{{element.dni}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef>Correo</th>
-    <td mat-cell *matCellDef="let element">{{element.email}}</td>
-  </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Correo</th>
+      <td mat-cell *matCellDef="let element">{{element.email}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="fullname">
-    <th mat-header-cell *matHeaderCellDef>Nombres</th>
-    <td mat-cell *matCellDef="let element">{{element.fullname}}</td>
-  </ng-container>
+    <ng-container matColumnDef="fullname">
+      <th mat-header-cell *matHeaderCellDef>Nombres</th>
+      <td mat-cell *matCellDef="let element">{{element.fullname}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="isSuperuser">
-    <th mat-header-cell *matHeaderCellDef>Superusuario</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.isSuperuser ? 'Si' : 'No'}}
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="isSuperuser">
+      <th mat-header-cell *matHeaderCellDef>Superusuario</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.isSuperuser ? 'Si' : 'No'}}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>Acciones</th>
-    <td mat-cell *matCellDef="let element">
-      <button
-        mat-icon-button
-        color="primary"
-        [routerLink]="['./', element.id, 'update']"
-        *appHasPermissions="authSession.permissions.USER_UPDATE"
-      >
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        color="accent"
-        (click)="confirmDelete(element)"
-        *appHasPermissions="authSession.permissions.USER_DELETE"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-icon-button
+          color="primary"
+          [routerLink]="['./', element.id, 'update']"
+          *appHasPermissions="authSession.permissions.USER_UPDATE"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="accent"
+          (click)="confirmDelete(element)"
+          *appHasPermissions="authSession.permissions.USER_DELETE"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</ng-container>
 <ng-template #ConfirmTemplate let-data>
   <div>
     <p class="text-lg">Desea eliminar a {{ data.fullname }}?</p>

@@ -76,3 +76,6 @@ npm start
 ## colleccion postman
 
 en la carpeta `server` se encuentra el archivo `CursoAngular.postman_collection`
+
+## Manejo de estados con NGXS [aquí](./docs/ngxs.md)
+## Pruebas unitarias [aquí](./docs/testing.md)

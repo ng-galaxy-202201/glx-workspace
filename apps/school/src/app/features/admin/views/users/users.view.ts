@@ -1,7 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Select, Store } from '@ngxs/store';
 import { AuthSession } from '@school/common/auth/services/auth-session.service';
+import { Observable } from 'rxjs';
 import { UsersHttp } from '../../common/http/users.http';
+import { UsersActionDelete, UsersActionLoad, UsersState } from '../../common/store/users.state';
 import { User } from '../../domain/models/user.model';
 
 @Component({
@@ -16,7 +19,8 @@ export class UsersView implements OnInit {
     'isSuperuser',
     'actions',
   ];
-  users: User[] = [];
+
+  @Select(UsersState.users) users$!: Observable<User[]>;
 
   @ViewChild('ConfirmTemplate') confirmTemplate!: TemplateRef<HTMLDivElement>;
 
@@ -24,10 +28,11 @@ export class UsersView implements OnInit {
     private usersHttp: UsersHttp,
     private dialog: MatDialog,
     protected authSession: AuthSession,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
-    this.usersHttp.getAll().subscribe((users) => (this.users = users));
+    this.store.dispatch(new UsersActionLoad())
   }
 
   confirmDelete(user: User) {
@@ -40,10 +45,9 @@ export class UsersView implements OnInit {
   }
 
   deleteUser(id: number) {
-    this.usersHttp.delete(id)
+    this.store.dispatch(new UsersActionDelete(id))
       .subscribe(() => {
         this.dialog.closeAll();
-        this.users = this.users.filter(user => user.id != id);
       })
   }
 }

@@ -26,10 +26,12 @@ export class UsersHttp {
 
   create(body: UserDTO) {
     return this.http.post<UserWithPermissionReponse>(this.endpoint, body)
+      .pipe(map(user => new UserWithPermissions(user)))
   }
 
   update(id: number, body: UserDTO) {
     return this.http.put<UserWithPermissionReponse>(`${this.endpoint}/${id}`, body)
+      .pipe(map(user => new UserWithPermissions(user)))
   }
 
   delete(id: number) {

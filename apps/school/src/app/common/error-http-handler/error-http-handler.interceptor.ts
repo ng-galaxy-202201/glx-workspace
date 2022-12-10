@@ -9,12 +9,12 @@ import {
 import { catchError, Observable, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-const errorFromStatus: Map<number, string> = new Map([
+export const errorFromStatus: Map<number, string> = new Map([
   [500, 'Estamos trabajando en mejorar tu servicio, por favor intentelo mas tarde'],
 ])
 
 
-const customFromError: Map<string, string> = new Map([
+export const customFromError: Map<string, string> = new Map([
   ['ERR_USR_0001', 'El correo ya esta en uso'],
 ])
 

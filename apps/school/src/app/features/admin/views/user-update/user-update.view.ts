@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 import { UsersHttp } from '../../common/http/users.http';
+import { UsersActionLoadDetail, UsersActionUpdate, UsersState } from '../../common/store/users.state';
 import { UserDTO } from '../../domain/dto/user.dto';
 import { UserWithPermissions } from '../../domain/models/user.model';
 
@@ -10,12 +13,15 @@ import { UserWithPermissions } from '../../domain/models/user.model';
 })
 export class UserUpdateView implements OnInit {
   id: number;
-  user?: UserWithPermissions;
+
+  @Select(UsersState.selected)
+  user$!: Observable<UserWithPermissions>;
 
   constructor(
     private usersHttp: UsersHttp,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store
   ) {
     this.id = +this.route.snapshot.paramMap.get('id')!;
   }
@@ -25,12 +31,11 @@ export class UserUpdateView implements OnInit {
   }
 
   load() {
-    this.usersHttp.getOne(this.id)
-      .subscribe(user => this.user = user)
+    this.store.dispatch(new UsersActionLoadDetail(this.id))
   }
 
   save(userFormValue: UserDTO) {
-    this.usersHttp.update(this.id, userFormValue)
+    this.store.dispatch(new UsersActionUpdate(this.id, userFormValue))
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route })
       })

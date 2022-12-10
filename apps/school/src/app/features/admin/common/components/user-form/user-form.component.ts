@@ -1,20 +1,37 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { iif, NEVER, Observable, switchMap } from 'rxjs';
 import { UserDTO } from '../../../domain/dto/user.dto';
 import { RolPermission } from '../../../domain/models/rol-permission.model';
 import { UserWithPermissions } from '../../../domain/models/user.model';
 import { PermissionsHttp } from '../../http/permissions.http';
 import { RolsHttp } from '../../http/rols.http';
+import {
+  PermissionsActionInitialize,
+  PermissionsActionLoad,
+  PermissionsState,
+} from '../../store/permissions.state';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  styleUrls: ['./user-form.component.scss'],
 })
 export class UserFormComponent implements OnChanges {
   userForm: FormGroup;
-  permissions$: Observable<RolPermission[]>;
+
+  @Select(PermissionsState.permissions)
+  permissions$!: Observable<RolPermission[]>;
+
   rols$: Observable<RolPermission[]>;
 
   @Input() backPath = '../';
@@ -23,8 +40,8 @@ export class UserFormComponent implements OnChanges {
 
   constructor(
     fb: FormBuilder,
-    private permissionsHttp: PermissionsHttp,
     private rolsHttp: RolsHttp,
+    private store: Store
   ) {
     this.userForm = fb.group({
       dni: ['', Validators.required],
@@ -34,9 +51,8 @@ export class UserFormComponent implements OnChanges {
       isSuperuser: [false, Validators.required],
       permissions: [[]],
       rols: [[]],
-    })
-
-    this.permissions$ = this.permissionsHttp.getAll();
+    });
+    this.store.dispatch(new PermissionsActionLoad());
     this.rols$ = this.rolsHttp.getAll();
   }
 
@@ -53,9 +69,9 @@ export class UserFormComponent implements OnChanges {
       firstName: user.firstName,
       lastName: user.lastName,
       isSuperuser: user.isSuperuser,
-      permissions: user.permissions.map(permission => permission.id),
-      rols: user.rols.map(rol => rol.id),
-    })
+      permissions: user.permissions.map((permission) => permission.id),
+      rols: user.rols.map((rol) => rol.id),
+    });
   }
 
   submitForm() {
